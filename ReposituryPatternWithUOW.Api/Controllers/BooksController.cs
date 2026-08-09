@@ -5,6 +5,8 @@ using ReposituryPatternWithUOW.Core.Consts;
 using ReposituryPatternWithUOW.Core.Interfaces;
 using ReposituryPatternWithUOW.Core.Models;
 using ReposituryPatternWithUOW.EF;
+using ReposituryPatternWithUOW.Core.Mappings; // for the extension methods
+using ReposituryPatternWithUOW.Dtos;          // for the DTO types themselves
 
 namespace ReposituryPatternWithUOW.Api.Controllers
 {
@@ -32,7 +34,10 @@ namespace ReposituryPatternWithUOW.Api.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            return Ok(_unitOfWork.Books.GetAll());
+            var books = _unitOfWork.Books.GetAll();
+            var dtos = (from b in books
+                        select b.ToDto()).ToList();
+            return Ok(dtos);
         }
 
 

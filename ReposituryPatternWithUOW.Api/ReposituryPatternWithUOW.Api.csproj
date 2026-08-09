@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ReposituryPatternWithUOW.Dtos\ReposituryPatternWithUOW.Dtos.csproj" />
     <ProjectReference Include="..\ReposituryPatternWithUOW.EF\ReposituryPatternWithUOW.EF.csproj" />
   </ItemGroup>
 

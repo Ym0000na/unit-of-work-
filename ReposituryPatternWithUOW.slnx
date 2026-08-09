@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ReposituryPatternWithUOW.Api/ReposituryPatternWithUOW.Api.csproj" />
   <Project Path="ReposituryPatternWithUOW.Core/ReposituryPatternWithUOW.Core.csproj" Id="c973f6c9-1a21-4bfd-b05a-737d015ab793" />
+  <Project Path="ReposituryPatternWithUOW.Dtos/ReposituryPatternWithUOW.Dtos.csproj" Id="8617e5b9-329e-42f7-b732-0454a01765ee" />
   <Project Path="ReposituryPatternWithUOW.EF/ReposituryPatternWithUOW.EF.csproj" Id="76e05bd2-a3b2-4c0d-9823-cf555e882d38" />
 </Solution>
