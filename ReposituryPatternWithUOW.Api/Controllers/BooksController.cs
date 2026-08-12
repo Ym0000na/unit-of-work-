@@ -40,6 +40,32 @@ namespace ReposituryPatternWithUOW.Api.Controllers
             return Ok(dtos);
         }
 
+        [HttpGet("view-dto")]
+        public IActionResult GetBooksWithAuthor_UsingDto()
+        {
+            var books = _unitOfWork.Books.GetAll();
+            var authors = _unitOfWork.Authors.GetAll();
+
+            var result = books.ToBookAuthorViewDtoList(authors);
+            return Ok(result);
+        }
+
+        [HttpGet("view-manual")]
+        public IActionResult GetBooksWithAuthor_Manual()
+        {
+            var books = _unitOfWork.Books.GetAll();
+            var authors = _unitOfWork.Authors.GetAll();
+
+            var result = from b in books
+                         join a in authors on b.AuthorId equals a.Id
+                         select new
+                         {
+                             Title = b.Title,
+                             AuthorName = a.Name
+                         };
+
+            return Ok(result.ToList());
+        }
 
         [HttpGet("GetByName")]
         public IActionResult GetByName()
