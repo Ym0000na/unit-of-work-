@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReposituryPatternWithUOW.Core;
 using ReposituryPatternWithUOW.Core.Interfaces;
+using ReposituryPatternWithUOW.Core.Profiles;
 using ReposituryPatternWithUOW.EF;
 using ReposituryPatternWithUOW.EF.Repositories;
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 //builder.Services.AddTransient(typeof(IBaseRepositury<>), typeof(BaseRepositury<>));  NOT USING UNIT OF WORK
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>(); //USING UNIT OF WORK
 
+builder.Services.AddAutoMapper(cfg => { }, typeof(BookProfile));
 
 var app = builder.Build();
 

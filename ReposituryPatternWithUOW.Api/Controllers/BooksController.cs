@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReposituryPatternWithUOW.Core;
 using ReposituryPatternWithUOW.Core.Consts;
 using ReposituryPatternWithUOW.Core.Interfaces;
-using ReposituryPatternWithUOW.Core.Models;
-using ReposituryPatternWithUOW.EF;
 using ReposituryPatternWithUOW.Core.Mappings; // for the extension methods
+using ReposituryPatternWithUOW.Core.Models;
 using ReposituryPatternWithUOW.Dtos;          // for the DTO types themselves
+using ReposituryPatternWithUOW.EF;
 
 namespace ReposituryPatternWithUOW.Api.Controllers
 {
@@ -16,11 +17,12 @@ namespace ReposituryPatternWithUOW.Api.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-
-        public BooksController(IUnitOfWork unitOfWork)
+        public BooksController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
 
@@ -40,7 +42,7 @@ namespace ReposituryPatternWithUOW.Api.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("view-dto")]
+        [HttpGet("BookAuthorView-dto")]
         public IActionResult GetBooksWithAuthor_UsingDto()
         {
             var books = _unitOfWork.Books.GetAll();
@@ -50,7 +52,7 @@ namespace ReposituryPatternWithUOW.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("view-manual")]
+        [HttpGet("BookAuthorView-NoDto")]
         public IActionResult GetBooksWithAuthor_Manual()
         {
             var books = _unitOfWork.Books.GetAll();
@@ -65,6 +67,22 @@ namespace ReposituryPatternWithUOW.Api.Controllers
                          };
 
             return Ok(result.ToList());
+        }
+
+        [HttpGet("GetAll-automapper")]
+        public IActionResult GetAll_UsingAutoMapper()
+        {
+            var books = _unitOfWork.Books.GetAll();
+            var result = _mapper.Map<List<BookDto>>(books);
+            return Ok(result);
+        }
+
+        [HttpGet("BookAuthorView-automapper")]
+        public IActionResult GetBooksWithAuthor_UsingAutoMapper()
+        {
+            var books = _unitOfWork.Books.GetAll(); 
+            var result = _mapper.Map<List<BookAuthorViewDto>>(books);
+            return Ok(result);
         }
 
         [HttpGet("GetByName")]
