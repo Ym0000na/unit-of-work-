@@ -75,14 +75,20 @@ namespace ReposituryPatternWithUOW.Api.Controllers
             var books = _unitOfWork.Books.GetAll();
             var result = _mapper.Map<List<BookDto>>(books);
             return Ok(result);
+
+
         }
 
         [HttpGet("BookAuthorView-automapper")]
         public IActionResult GetBooksWithAuthor_UsingAutoMapper()
         {
-            var books = _unitOfWork.Books.GetAll(); 
+            //var books = _unitOfWork.Books.GetAll(); 
+            //var result = _mapper.Map<List<BookAuthorViewDto>>(books);
+            //return Ok(result);
+
+            var books = _unitOfWork.Books.FindAll( b => true,new[] { "Author" });
             var result = _mapper.Map<List<BookAuthorViewDto>>(books);
-            return Ok(result);
+            return Ok(result); 
         }
 
         [HttpGet("GetByName")]
