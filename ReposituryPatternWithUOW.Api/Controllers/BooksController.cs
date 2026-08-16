@@ -58,13 +58,14 @@ namespace ReposituryPatternWithUOW.Api.Controllers
             var books = _unitOfWork.Books.GetAll();
             var authors = _unitOfWork.Authors.GetAll();
 
-            var result = from b in books
+            var result = (from b in books
                          join a in authors on b.AuthorId equals a.Id
-                         select new
+                         select new BookAuthorViewDto
                          {
                              Title = b.Title,
                              AuthorName = a.Name
-                         };
+                              
+                         }).ToList();
 
             return Ok(result.ToList());
         }
@@ -82,13 +83,18 @@ namespace ReposituryPatternWithUOW.Api.Controllers
         [HttpGet("BookAuthorView-automapper")]
         public IActionResult GetBooksWithAuthor_UsingAutoMapper()
         {
-            //var books = _unitOfWork.Books.GetAll(); 
-            //var result = _mapper.Map<List<BookAuthorViewDto>>(books);
-            //return Ok(result);
 
             var books = _unitOfWork.Books.FindAll( b => true,new[] { "Author" });
             var result = _mapper.Map<List<BookAuthorViewDto>>(books);
-            return Ok(result); 
+
+            // We can use the imclude method but it's not necessary
+            // we can just put autoMap author and book to BookAuthorViewDto and it will work
+
+            var books1 = _unitOfWork.Books.GetAll();
+            var result1 = _mapper.Map<List<BookAuthorViewDto>>(books1);
+
+
+            return Ok(result1); 
         }
 
         [HttpGet("GetByName")]

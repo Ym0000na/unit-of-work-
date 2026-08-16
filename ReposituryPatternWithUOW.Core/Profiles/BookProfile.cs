@@ -14,6 +14,12 @@ namespace ReposituryPatternWithUOW.Core.Profiles
         public BookProfile()
         {
             CreateMap<Book, BookDto>();
+            CreateMap<Author, BookAuthorViewDto>();
+            CreateMap<Book, BookAuthorViewDto>();
+            //CreateMap<Book, BookAuthorViewDto>()
+            //         .ForMember(dest => dest.AuthorName,
+            //                    opt => opt.MapFrom(src => src.Author != null ? src.Author.Name : null));
+
         }
     }
 }

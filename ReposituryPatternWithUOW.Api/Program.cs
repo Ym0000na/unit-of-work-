@@ -25,6 +25,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>(); //USING UNIT OF WORK
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(BookProfile));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
